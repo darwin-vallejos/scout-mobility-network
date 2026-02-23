@@ -1,0 +1,19 @@
+[[redirects]]
+from = "/rider"
+to = "/scout_rider.html"
+status = 200
+
+[[redirects]]
+from = "/host"
+to = "/scout_host.html"
+status = 200
+
+[[redirects]]
+from = "/flow"
+to = "/flow_la_v3.html"
+status = 200
+
+[[redirects]]
+from = "/brief"
+to = "/copilot_brief.html"
+status = 200

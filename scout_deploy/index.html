@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scout — LA Mobility</title>
+<link rel="manifest" href="/manifest.json">
+<style>
+  body { background: #080a08; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+  .btn { width: 80%; max-width: 300px; padding: 20px; margin: 10px; border-radius: 8px; text-decoration: none; color: white; text-align: center; border: 1px solid rgba(255,255,255,0.1); font-weight: bold; }
+  .rider { background: #0aff6e; color: #080a08; }
+  .host { background: #161e16; }
+  .flow { background: #ff5c1a; }
+</style>
+</head>
+<body>
+  <a href="/rider" class="btn rider">🛴 Open Scout Rider</a>
+  <a href="/host" class="btn host">🏠 Host Dashboard</a>
+  <a href="/flow" class="btn flow">🚇 Open FLOW LA</a>
+  <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js');}</script>
+</body>
+</html>
