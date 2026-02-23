@@ -1,5 +1,11 @@
 exports.handler = async function (event, context) {
   try {
+    const apiKey = process.env.MY_API_KEY || null;
+    if (!apiKey) {
+      console.warn('MY_API_KEY is not set in environment; proceeding without it.');
+    } else {
+      console.log('MY_API_KEY loaded from environment.');
+    }
     const method = event.httpMethod || 'GET';
     let destination = 'unknown';
 
