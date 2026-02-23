@@ -5,7 +5,7 @@ async function planRouteWithGemini(destination) {
     resultsDiv.innerHTML = `<div style="color:#0aff6e; padding:20px;">🔍 Scout AI is calculating a $3.50 route to ${destination}...</div>`;
 
     // PASTE YOUR API KEY FROM GOOGLE AI STUDIO BELOW
-    const API_KEY = "YOUR_ACTUAL_GEMINI_API_KEY_HERE";
+    const API_KEY = "AIzaSyAT6ZI5C-qHy4pWGhTPaxn579urGMB83kA";
     const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
