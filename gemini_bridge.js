@@ -1,28 +1,44 @@
-// Scout Bridge: call local Netlify function `route` to get routing data
+cat << 'EOF' > gemini_bridge.js
+// Scout Bridge: Direct Gemini API Integration
 async function planRouteWithGemini(destination) {
     const resultsDiv = document.getElementById('search-results') || document.body;
-    resultsDiv.innerHTML = `🔍 Scout is calculating your route to ${destination}...`;
+    resultsDiv.innerHTML = `<div style="color:#0aff6e; padding:20px;">🔍 Scout AI is calculating a $3.50 route to ${destination}...</div>`;
 
-    const URL = `/.netlify/functions/route`;
+    // PASTE YOUR API KEY FROM GOOGLE AI STUDIO BELOW
+    const API_KEY = "YOUR_ACTUAL_GEMINI_API_KEY_HERE";
+    const URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
         const response = await fetch(URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ destination })
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: `You are the Scout AI for the Westlake/Thousand Oaks area. 
+                        Plan a realistic transit/scooter route to ${destination}. 
+                        Include estimated time and a total cost of $3.50. 
+                        Format the response in clean HTML.`
+                    }]
+                }]
+            })
         });
 
-        if (!response.ok) {
-            const errText = await response.text();
-            throw new Error(`Function error ${response.status}: ${errText}`);
-        }
+        if (!response.ok) throw new Error('API Key or Network Error');
 
         const data = await response.json();
-        resultsDiv.innerHTML = `<h3>✅ Route Found</h3><p>${data.summary}</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
-    } catch (err) {
-        resultsDiv.innerHTML = '❌ Connection Error.';
-        console.error(err);
+        const aiResponse = data.candidates[0].content.parts[0].text;
+        
+        resultsDiv.innerHTML = `
+            <div style="background:#161e16; border:1px solid #0aff6e; padding:20px; border-radius:8px; margin:20px;">
+                <h3 style="color:#0aff6e; margin-top:0;">✅ Route Optimized</h3>
+                <div style="color:white; line-height:1.6;">${aiResponse}</div>
+            </div>`;
+
+    } catch (error) {
+        console.error("Scout Engine Error:", error);
+        resultsDiv.innerHTML = `<div style="color:#ff5c1a; padding:20px;">❌ Error: Could not connect to Scout Brain. Check your API Key.</div>`;
     }
 }
-        resultsDiv.innerHTML = "❌ Connection Error. Check your API Key.";
-
+EOF
+git add gemini_bridge.js && git commit -m "System: Update bridge to use direct Gemini API key" && git push origin main
